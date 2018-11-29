@@ -35,38 +35,28 @@ export default {
     isPostBack: false
   }),
   name: 'component-name',
-  props: {
-    prop1: String,
-    prop2: {
-      type: String,
-      required: false
-    }
-  },
   
   methods: {
     continueStep: function() {
       this.$router.push({ name: 'Step' + store.getters.step })
     },
     
-    
     step1: function () {
-        console.log("button pushed");
-        const { firstname, lastname } = this
-        this.$store.dispatch(STEP1_REQUEST, { firstname, lastname }
-        ).then((res) => {
-          idbKeyVal.set('osAuth', 'reg-token', res.data )
-          .then(() => {
-            this.$router.push({ name: 'Step2' })
-          })
-          
-        }).catch(function(e) {
-          console.log(e);
+      console.log("button pushed");
+      const { firstname, lastname } = this
+      this.$store.dispatch(STEP1_REQUEST, { firstname, lastname }
+      ).then((res) => {
+        idbKeyVal.set('osAuth', 'reg-token', res.data.regtoken )
+        .then(() => {
+          store.state.regtoken = res.data.regtoken
+          this.$router.push({ name: 'Step2' })
         })
-      },
-    func2() {
-
-    }
+      }).catch(function(e) {
+        console.log(e);
+      })
+    },
   },
+
   created() {
     idbKeyVal.get('osAuth', 'reg-token')
       .then((token) => {
@@ -79,13 +69,10 @@ export default {
             if(store.getters.step>0){
               store.state.regtoken = token
               this.isPostBack = true;
-              
             } else {
               this.isPostBack = false;
             }
           })
-          
-       
         } else {
             this.isPostBack = false;
         }

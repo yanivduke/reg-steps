@@ -149,8 +149,9 @@ const mutations = {
   },
   [STEP1_SUCCESS]: (state, resp) => {
     state.status = 'success'
-    state.step = 2
-    state.regtoken = resp.data
+    state.step = resp.data.step
+    state.regtoken = resp.data.regtoken
+
 
   },
   [STEP1_ERROR]: (state) => {
@@ -161,7 +162,7 @@ const mutations = {
   },
   [STEP2_SUCCESS]: (state, resp) => {
     state.status = 'success'
-    state.step = 3
+    state.step = resp.data.step
   },
   [STEP2_ERROR]: (state) => {
     state.status = 'error'
@@ -171,7 +172,7 @@ const mutations = {
   },
   [STEP3_SUCCESS]: (state, resp) => {
     state.status = 'success'
-    state.step = 4
+    state.step = resp.data.step
   },
   [STEP3_ERROR]: (state) => {
     state.status = 'error'

@@ -32,6 +32,39 @@ const ifAuthenticated = (to, from, next) => {
   });
 }
 
+
+
+const isStepFocus2 = (to, from, next) => {
+  if (store.getters.step<=2) {
+    console.log('inside router: isStepFocus2')
+    next()
+    return
+  }
+  console.log('inside router isStepFocus2 not in focus')
+  next('/')
+  
+}
+const isStepFocus3 = (to, from, next) => {
+  if (store.getters.step<=3) {
+    console.log('inside router: isStepFocus3')
+    next()
+    return
+  }
+  console.log('inside router isStepFocus3 not in focus')
+  next('/')
+  
+}
+const isStepFocus4 = (to, from, next) => {
+  if (store.getters.step<=4) {
+    console.log('inside router: isStepFocus4')
+    next()
+    return
+  }
+  console.log('inside router isStepFocus4 not in focus')
+  next('/')
+
+}
+
 export default new Router({
   routes: [
     {
@@ -45,21 +78,21 @@ export default new Router({
       path: '/step2',
       name: 'Step2',
       component: () => import("../pages/Step2"),
-      beforeEnter: ifNotAuthenticated
+      beforeEnter: isStepFocus2
       
     },
     {
       path: '/step3',
       name: 'Step3',
       component: () => import("../pages/Step3"),
-      beforeEnter: ifNotAuthenticated
+      beforeEnter: isStepFocus3
       
     },
     {
-      path: '/users',
-      name: 'users',
-      component: () => import("../pages/UsersList"),
-      beforeEnter: ifAuthenticated
+      path: '/step4',
+      name: 'Step4',
+      component: () => import("../pages/Step4"),
+      beforeEnter: isStepFocus4
     },
     {
       path: '/login',

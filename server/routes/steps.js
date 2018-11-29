@@ -32,7 +32,7 @@ router.post('/ispostback', async function(req, res) {
 router.post('/1', async function(req, res) {
     let salt = helpers.cryptoRandomBytes(128);
     let pwd = salt.slice(57,65);
-    //console.log("in step1")
+    console.log("in step1")
     let sha256 = await helpers.GetHashBySalt(pwd, salt, process.env.PASSWORD_FORMAT)
 
     let insert1 = {
@@ -43,13 +43,15 @@ router.post('/1', async function(req, res) {
         
     }
     knex.insert(insert1).into("registrations").then(function (id) {
-        //console.log("step1 new id: ",id);
-        res.json({status: "ok",data:sha256})
+        console.log("step1 new id: ",id);
+        let step = 2
+        res.json({status: "ok",data:{step: step,regtoken:sha256}})
     }).catch(function(e) {
+        console.log("step1 error ",e);
         res.status(401).json({
             status: "error",
-            error_type: "regerr",
-            message: "general"
+            error_type: "step1err",
+            message: "knex exeption"
         })
     })
 })
@@ -67,7 +69,8 @@ router.post('/2', async function(req, res) {
     .update(update2)
     .then(function () {
         //console.log(id);
-        res.sendStatus(200)
+        let step = 3
+        res.json({status: "ok",data:{step: step}})
     }).catch(function(e) {
         //console.log("error:" + e);
         res.status(401).json({
@@ -77,7 +80,6 @@ router.post('/2', async function(req, res) {
         })
     })
 })
-
 
 router.post('/3', async function(req, res) {
     let update3 = {
@@ -91,7 +93,8 @@ router.post('/3', async function(req, res) {
     .update(update3)
     .then(function (id) {
         //console.log(id);
-        res.send(id)
+        let step = 4
+        res.json({status: "ok",data:{step: step}})
     }).catch(function(e) {
         res.status(401).json({
             status: "error",
