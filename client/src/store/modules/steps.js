@@ -28,8 +28,8 @@ const actions = {
 
       commit(POSTBACK_REQUEST)
 
-      fetch('http://localhost:3001/api/steps/ispostback/', postConfig)
-      //fetch('/api/authenticate/', postConfig)
+      //fetch('http://localhost:3001/api/steps/ispostback/', postConfig)
+      fetch('/api/steps/ispostback/', postConfig)
       .then((resp) => resp.json().then((respJson) => {
         console.log(respJson)
         commit(POSTBACK_SUCCESS, respJson)
@@ -57,8 +57,8 @@ const actions = {
 
       commit(STEP1_REQUEST)
 
-      fetch('http://localhost:3001/api/steps/1/', postConfig)
-      //fetch('/api/authenticate/', postConfig)
+      //fetch('http://localhost:3001/api/steps/1/', postConfig)
+      fetch('/api/steps/1/', postConfig)
       .then((resp) => resp.json().then((respJson) => {
         console.log("in store steps",respJson)
         commit(STEP1_SUCCESS, respJson)
@@ -86,8 +86,8 @@ const actions = {
 
       commit(STEP2_REQUEST)
 
-      fetch('http://localhost:3001/api/steps/2/', postConfig)
-      //fetch('/api/authenticate/', postConfig)
+      //fetch('http://localhost:3001/api/steps/2/', postConfig)
+      fetch('/api/steps/2/', postConfig)
       .then((resp) => resp.json().then((respJson) => {
         
         commit(STEP2_SUCCESS, respJson)
@@ -115,8 +115,8 @@ const actions = {
 
       commit(STEP3_REQUEST)
 
-      fetch('http://localhost:3001/api/steps/3/', postConfig)
-      //fetch('/api/authenticate/', postConfig)
+      //fetch('http://localhost:3001/api/steps/3/', postConfig)
+      fetch('/api/steps/3/', postConfig)
       .then((resp) => resp.json().then((respJson) => {
         commit(STEP3_SUCCESS, respJson)
         resolve(respJson.data)
