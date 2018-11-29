@@ -3,12 +3,12 @@ import { POSTBACK_REQUEST, POSTBACK_SUCCESS, POSTBACK_ERROR, STEP1_REQUEST, STEP
 
 import {idbKeyVal} from '../../idbPromise'
 
-const state = { step: 0, status: '', registration: {firstname:'',lastname:'',email:'',phone:''} }
+const state = { regtoken:'', step: 0, status: '', registration: {firstname:'',lastname:'',email:'',phone:''} }
 
 const getters = {
   step: state => state.step,
   stepStatus: state => state.status,
-
+  regtoken: state => state.regtoken,
 }
 
 const actions = {
@@ -91,7 +91,7 @@ const actions = {
       .then((resp) => resp.json().then((respJson) => {
         
         commit(STEP2_SUCCESS, respJson)
-        resolve(respJson.data)
+        resolve(respJson)
       }))
       .catch(err => {
         commit(STEP2_ERROR, err)
@@ -149,7 +149,9 @@ const mutations = {
   },
   [STEP1_SUCCESS]: (state, resp) => {
     state.status = 'success'
-    state.step = 1
+    state.step = 2
+    state.regtoken = resp.data
+
   },
   [STEP1_ERROR]: (state) => {
     state.status = 'error'
@@ -159,7 +161,7 @@ const mutations = {
   },
   [STEP2_SUCCESS]: (state, resp) => {
     state.status = 'success'
-    state.step = 2
+    state.step = 3
   },
   [STEP2_ERROR]: (state) => {
     state.status = 'error'
@@ -169,7 +171,7 @@ const mutations = {
   },
   [STEP3_SUCCESS]: (state, resp) => {
     state.status = 'success'
-    state.step = 3
+    state.step = 4
   },
   [STEP3_ERROR]: (state) => {
     state.status = 'error'

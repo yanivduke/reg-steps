@@ -49,6 +49,13 @@ export default new Router({
       
     },
     {
+      path: '/step3',
+      name: 'Step3',
+      component: () => import("../pages/Step3"),
+      beforeEnter: ifNotAuthenticated
+      
+    },
+    {
       path: '/users',
       name: 'users',
       component: () => import("../pages/UsersList"),

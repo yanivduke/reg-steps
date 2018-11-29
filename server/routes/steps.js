@@ -55,19 +55,21 @@ router.post('/1', async function(req, res) {
 })
 
 router.post('/2', async function(req, res) {
+    console.log("regtoken req: ", req.body.regtoken);
     let update2 = {
         phone: req.body.phone, 
-        email: preq.body.email,
+        email: req.body.email,
         step: 2
         
     }
     knex('registrations')
     .where({ uniq: req.body.regtoken })
     .update(update2)
-    .then(function (id) {
+    .then(function () {
         //console.log(id);
-        res.send(id)
+        res.sendStatus(200)
     }).catch(function(e) {
+        //console.log("error:" + e);
         res.status(401).json({
             status: "error",
             error_type: "regerr",

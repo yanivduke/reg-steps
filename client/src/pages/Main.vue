@@ -54,8 +54,7 @@ export default {
         const { firstname, lastname } = this
         this.$store.dispatch(STEP1_REQUEST, { firstname, lastname }
         ).then((res) => {
-          idbKeyVal.set('osAuth', 'reg-token', res.data
-          )
+          idbKeyVal.set('osAuth', 'reg-token', res.data )
           .then(() => {
             this.$router.push({ name: 'Step2' })
           })
@@ -73,11 +72,14 @@ export default {
       .then((token) => {
         if(token!=undefined){
           console.log(token)
+          
           this.$store.dispatch(POSTBACK_REQUEST, {regtoken: token})
           .then((res)=>{
             console.log("step in store: " ,store.getters.step)
             if(store.getters.step>0){
+              store.state.regtoken = token
               this.isPostBack = true;
+              
             } else {
               this.isPostBack = false;
             }
