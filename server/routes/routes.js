@@ -14,8 +14,8 @@ var env = process.env.NODE_ENV || 'development';
 router.get('/api', function(req, res) {
   res.status(200).send('Hello API!');
 });
-//router.use('/api/sendmail' , send_mail)
-//router.use('/api/authenticate' , authentication_route)
+router.use('/api/sendmail' , send_mail)
+router.use('/api/authenticate' , authentication_route)
 //router.use('/api/register' , register)
 router.use('/api/steps' , steps)
 
@@ -26,7 +26,7 @@ router.options('*', function(req,res) {
 //===== Authorized connection only from here down ======
 // check token valid and setup data in req.scope from token
 router.use(authorize)
-
+router.use('/api/register' , register)
 router.use('/api/users' , users );
 
 module.exports = router;
