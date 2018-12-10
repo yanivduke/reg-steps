@@ -6,12 +6,12 @@ import router from './router'
 import store from './store'
 
 import {init} from './idbPromise'
-import {reg} from './plugins/registerServiceWorker'
+//import {reg} from './plugins/registerServiceWorker'
 
 Vue.config.productionTip = false
 
 init();
-reg();
+//reg();
 
 new Vue({
   router,

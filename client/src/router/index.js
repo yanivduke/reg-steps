@@ -11,6 +11,7 @@ Vue.use(Router)
 
 const ifNotAuthenticated = (to, from, next) => {
   if (!store.getters.isAuthenticated) {
+    console.log('inside router isNotAuthenticated')
     next()
     return
   }
@@ -93,6 +94,12 @@ export default new Router({
       name: 'Step4',
       component: () => import("../pages/Step4"),
       beforeEnter: isStepFocus4
+    },
+    {
+      path: '/pos',
+      name: 'Pos',
+      component: () => import("../pages/Pos"),
+      beforeEnter: ifNotAuthenticated
     },
     {
       path: '/login',

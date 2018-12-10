@@ -9,5 +9,11 @@ module.exports = {
       swDest: './mysw.js',
       
     }
-  }
+  },
+  devServer: {
+    
+    port: 8080, // CHANGE YOUR PORT HERE!
+    https: false,
+    hotOnly: true,
+  },
 }
