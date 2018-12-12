@@ -2,7 +2,7 @@
 require('dotenv').load();
 
 const express = require('express');
-const knex = require('../knexfile');
+const knex = require('../knex');
 const helpers = require('../misc/helpers');
 const router = express.Router();
 

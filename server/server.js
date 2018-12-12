@@ -8,6 +8,8 @@ const routes = require('./routes/routes');
 const app = new express();
 
 app.use(bodyParser.json({limit: '4mb'}));
+app.use(bodyParser.urlencoded({ extended: false }));
+
 //allow cors !!! TODO check if needed in production (for mobile access and other clients)
 app.use(function(req, res, next) {
 
