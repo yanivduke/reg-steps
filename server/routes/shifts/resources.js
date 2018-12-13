@@ -26,21 +26,11 @@ resource.get('/', function(req, res, next) {
 );
 
 resource.get('/:resourceid', function(req, res, next) {
-    //console.log(req.shiftid)
-    if(req.shiftid === undefined) {
-        //console.log("111")
-        knex.from('resources')
-        .where('resources.id', req.params.resourceid)
-        .then(function(data) {
-            res.send(data)
-        })
-    } else {
-        res.status(401).json({
-            status: "error",
-            error_type: "resourceserr",
-            message: "too deep route"
-        })
-    }
+    knex.from('resources')
+    .where('resources.id', req.params.resourceid)
+    .then(function(data) {
+        res.send(data)
+    })
 });
 
 resource.post('/', function(req, res, next) {

@@ -2,32 +2,38 @@
 require('dotenv').load();
 
 const express = require('express');
-const bodyParser = require('body-parser');
 const knex = require('../../knex');
-const router = express.Router();
 
-router.use(bodyParser.json())
-router.use(bodyParser.urlencoded({ extended: false }));
+const property = express.Router(); //express.Router({mergeParams: true});
 
-router.get('/', function(req, res) {
-  knex.select()
-      .from('properties')
-      .then(function(data) {
-        res.send(data);
-      })
+property.get('/', function(req, res, next) {
+    //console.log("property get", req.shiftid)
+    if(req.resourceid === undefined) {
+        knex.from('properties')
+        .then(function(data) {
+            res.send(data)
+        })
+    } 
+    else {
+        knex.from('resources_properties')
+        .where('resource', req.resourceid)
+        .join('properties', {'property': 'properties.key'})
+        .then(function(data) {
+            res.send(data)
+        })
+    }
   }
 );
 
-router.get('/:id', function(req, res) {
-  knex.from('properties')
-      .where('properties.id', req.params.id)
-      .then(function(data) {
+property.get('/:propertyid', function(req, res, next) {
+    knex.from('properties')
+    .where('properties.key', req.params.propertyid)
+    .then(function(data) {
         res.send(data)
-      })
-})
+    })
+});
 
-router.post('/', async function(req, res) {
-    //console.log("regtoken req: ", req.body.regtoken);
+property.post('/', function(req, res, next) {
     knex('properties')
     .insert(req.body.data)
     .then(function () {
@@ -39,6 +45,20 @@ router.post('/', async function(req, res) {
             message: "general"
         })
     })
-})
+});
 
-module.exports = router;
+property.put('/', function(req, res, next) {
+    knex('resources_properties')
+    .insert(req.body.data)
+    .then(function () {
+        res.json({status: "ok"})
+    }).catch(function(e) {
+        res.status(401).json({
+            status: "error",
+            error_type: "propertieserr",
+            message: "general"
+        })
+    })
+});
+
+module.exports = property;

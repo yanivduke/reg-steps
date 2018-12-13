@@ -26,19 +26,11 @@ shift.get('/', function(req, res, next) {
 );
 
 shift.get('/:shiftid', function(req, res, next) {
-    if(req.resourceid === undefined) {
-        knex.from('shifts')
-        .where('shifts.id', req.params.shiftid)
-        .then(function(data) {
-            res.send(data)
-        })
-    } else {
-        res.status(401).json({
-            status: "error",
-            error_type: "shiftserr",
-            message: "too deep route"
-        })
-    }
+    knex.from('shifts')
+    .where('shifts.id', req.params.shiftid)
+    .then(function(data) {
+        res.send(data)
+    })
 })
 
 shift.post('/', function(req, res, next) {
